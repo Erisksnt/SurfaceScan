@@ -21,7 +21,7 @@ Instale diretamente via **pip**:
 
 ```bash
 pip install surfacescan
-
+```
 ### 2) Use a API Python diretamente
 
 ```python
