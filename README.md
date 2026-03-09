@@ -25,7 +25,7 @@ pip install surfacescan
 ### 2) Use a API Python diretamente
 
 ```python
-from scanner import ScanConfig, parse_ports, run_scan, export_results
+from surfacescan import ScanConfig, parse_ports, run_scan, export_results
 
 config = ScanConfig(
     host="scanme.nmap.org",
@@ -53,29 +53,29 @@ print(paths)  # {'csv': '.../scan-siem.csv', 'json': '.../scan-siem.json'}
 ### Execução básica
 
 ```bash
-python -m scanner.cli 127.0.0.1 -p 1-1000
+python -m surfacescan 127.0.0.1 -p 1-1000
 ```
 
 ### Com timeout customizado
 
 ```bash
-python -m scanner.cli 127.0.0.1 -p 1-1000 --timeout 1
+python -m surfacescan 127.0.0.1 -p 1-1000 --timeout 1 --timeout 1
 ```
 
 ### Modo verbose
 
 ```bash
-python -m scanner.cli 127.0.0.1 -p 1-1000 -v
+python -m surfacescan 127.0.0.1 -p 1-1000 -v
 ```
 
 ### Exportação de resultados
 
 ```bash
 # JSON
-python -m scanner.cli scanme.nmap.org -p 1-1000 --json
+python -m surfacescan scanme.nmap.org -p 1-1000 --json
 
 # CSV
-python -m scanner.cli scanme.nmap.org -p 1-1000 --csv
+python -m surfacescan scanme.nmap.org -p 1-1000 --csv
 ```
 
 📁 Os arquivos são salvos automaticamente na pasta `scans/`.

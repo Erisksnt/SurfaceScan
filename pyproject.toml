@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 [project.scripts]
-surfacescan = "scanner.cli:main"
+surfacescan = "surfacescan.cli:main"
 
-[tool.setuptools]
-packages = ["scanner", "scanner.core"]
+[tool.setuptools.packages.find]
+include = ["scanner", "scanner.*", "surfacescan", "surfacescan.*"]

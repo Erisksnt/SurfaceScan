@@ -1,4 +1,4 @@
-"""Public package SurfaceScan."""
+"""Public package namespace for SurfaceScan."""
 
 from scanner.api import ScanConfig, export_results, parse_ports, run_scan
 
