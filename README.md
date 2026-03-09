@@ -15,43 +15,50 @@ Esta ferramenta permite escanear portas TCP de um host, identificando portas abe
 - 🔹 Exportação de resultados (JSON / CSV)
 - 🔹 Estrutura modular (CLI + Library)
 
-O projeto foi desenvolvido com uma arquitetura que separa claramente **interface**, **lógica de negócio** e **utilitários**, facilitando manutenção e reutilização.
+## 📦 Preparando para importar no SurfaceLog (mini-SIEM)
 
----
+Para usar o SurfaceScan como dependência do seu `surfacelog`, agora existe uma API pública estável.
 
-## 🧠 Arquitetura do Projeto
+### 1) Instale como pacote local
+
+No repositório do `surfacelog`:
+
+```bash
+pip install /caminho/para/SurfaceScan
 
 ```
-Erisksnt/
-├── scanner/
-│   ├── cli.py                # Interface de linha de comando
-│   ├── banner_grabber.py     # Captura de banners (opcional)
-│   ├── port_scan.py          # Scan individual de portas
-│   ├── report.py             # Exportação de relatórios
-│   ├── core/
-│   │   └── scanner.py        # Biblioteca com threading
-├── scans/                    # Resultados gerados
-├── json_to_csv.py            # Conversor auxiliar
-├── README.md
+Ou em modo desenvolvimento:
+
+```bash
+pip install -e /caminho/para/SurfaceScan
+
+### 2) Use a API Python diretamente
+
+```python
+from scanner import ScanConfig, parse_ports, run_scan, export_results
+
+config = ScanConfig(
+    host="scanme.nmap.org",
+    ports=parse_ports("22,80,443,8080-8090"),
+    timeout=1.0,
+    threads=80,
+)
+
+results = run_scan(config)
+paths = export_results(results, output_dir="./data/imports", base_name="scan-siem")
+
+print(results)
+print(paths)  # {'csv': '.../scan-siem.csv', 'json': '.../scan-siem.json'}
 ```
 
-📌 **Destaque**: o threading está totalmente encapsulado na **biblioteca**, mantendo a CLI simples e limpa.
+### 3) Integração sugerida no fluxo do SIEM
 
----
+- Rodar `run_scan()` via job agendado.
+- Persistir JSON bruto em storage de ingestão.
+- Parsear eventos por porta/serviço no pipeline do SurfaceLog.
+- Correlacionar com logs de firewall/IDS para alertas.
 
-## ⚙️ Tecnologias e Conceitos Utilizados
-
-- Python 3
-- `argparse` (CLI profissional)
-- `socket` (networking)
-- `concurrent.futures.ThreadPoolExecutor`
-- Threading e paralelismo
-- Design modular
-- Versionamento semântico de commits
-
----
-
-## 🖥️ Uso da Ferramenta
+## 🖥️ Uso da Ferramenta (CLI)
 
 ### Execução básica
 
@@ -85,27 +92,18 @@ python -m scanner.cli scanme.nmap.org -p 1-1000 --csv
 
 ---
 
-## ⚡ Performance
+## ⚙️ Tecnologias e Conceitos Utilizados
 
-O scanner utiliza **threading** para testar múltiplas portas simultaneamente.
-
-Exemplo:
-
-- Range: `1-1000`
-- Threads: `50`
-
-Resultado:
-
-- Scan sequencial: vários minutos
-- Scan com threading: **segundos**
-
-Isso demonstra entendimento prático de **concorrência aplicada a redes**.
-
----
+- Python 3
+- `argparse` (CLI profissional)
+- `socket` (networking)
+- `concurrent.futures.ThreadPoolExecutor`
+- Threading e paralelismo
+- Design modular
 
 ## 🔐 Contexto de Segurança
 
-Este projeto foi desenvolvido com foco educacional e defensivo, simulando ferramentas utilizadas em:
+Este projeto foi desenvolvido com foco educacional e defensivo para diagnóstico de rede e auditorias autorizadas.
 
 - Diagnóstico de rede
 - Auditorias básicas
@@ -118,16 +116,6 @@ Não deve ser utilizado para atividades não autorizadas.
 
 ## 👤 Autor
 
-Desenvolvido por **Erick**\
-Formado em **Segurança da Informação**, com foco em **Redes e Cybersecurity**.
+Desenvolvido por **Erick**.
 
 ---
-
-## ✅ Conclusão
-
-Este projeto demonstra:
-
-- Capacidade de estruturar código profissional
-- Entendimento real de redes e segurança
-- Uso eficiente de threading
-- Boas práticas de CLI e versionamento
