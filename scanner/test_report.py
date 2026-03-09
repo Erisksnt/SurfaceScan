@@ -1,9 +1,11 @@
-from scanner.port_scan import scan_target
-from scanner.report import export_json
+from scanner import ScanConfig, run_scan
 
-target = "localhost"
-results = scan_target(target)
+if __name__ == "__main__":
+    config = ScanConfig(host="localhost", ports=[22, 80, 443])
+    results = run_scan(config)
 
-file = export_json(results)
-
-print("Arquivo gerado:", file)
+    if not results:
+        print("Nenhuma porta aberta encontrada.")
+    else:
+        for result in results:
+            print(result)
