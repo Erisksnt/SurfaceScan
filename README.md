@@ -59,7 +59,7 @@ python -m surfacescan 127.0.0.1 -p 1-1000
 ### Com timeout customizado
 
 ```bash
-python -m surfacescan 127.0.0.1 -p 1-1000 --timeout 1 --timeout 1
+python -m surfacescan 127.0.0.1 -p 1-1000 --timeout 1
 ```
 
 ### Modo verbose
