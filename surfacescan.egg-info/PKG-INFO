@@ -1,3 +1,18 @@
+Metadata-Version: 2.4
+Name: surfacescan
+Version: 0.1.0
+Summary: TCP port scanner with CLI and reusable Python API
+Author: Erick
+Keywords: scanner,ports,security,network
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
 # 🔍 SurfaceScan
 
 Um **scanner de portas TCP** desenvolvido em Python, com foco em performance, organização de código e boas práticas profissionais.\
@@ -15,12 +30,22 @@ Esta ferramenta permite escanear portas TCP de um host, identificando portas abe
 - 🔹 Exportação de resultados (JSON / CSV)
 - 🔹 Estrutura modular (CLI + Library)
 
-## 📦 Instalação
+## 📦 Preparando para importar no SurfaceLog (mini-SIEM)
 
-Instale diretamente via **pip**:
+Para usar o SurfaceScan como dependência do seu `surfacelog`, agora existe uma API pública estável.
+
+### 1) Instale como pacote local
+
+No repositório do `surfacelog`:
 
 ```bash
-pip install surfacescan
+pip install /caminho/para/SurfaceScan
+
+```
+Ou em modo desenvolvimento:
+
+```bash
+pip install -e /caminho/para/SurfaceScan
 
 ### 2) Use a API Python diretamente
 
