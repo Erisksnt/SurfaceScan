@@ -2,7 +2,7 @@ import argparse
 import datetime
 import os
 
-from scanner.core.scanner import scan_ports
+from scanner.api import ScanConfig, parse_ports, run_scan
 from scanner.report import export_to_csv, export_to_json
 
 
@@ -18,18 +18,6 @@ def auto_name(ext: str) -> str:
     os.makedirs("scans", exist_ok=True)
     ts = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     return os.path.join("scans", f"scan-{ts}.{ext}")
-
-
-def parse_ports(ports_str: str) -> list[int]:
-    ports = []
-    for item in ports_str.split(","):
-        item = item.strip()
-        if "-" in item:
-            start, end = map(int, item.split("-"))
-            ports.extend(range(start, end + 1))
-        else:
-            ports.append(int(item))
-    return ports
 
 
 def ask_export(results):
@@ -107,13 +95,13 @@ def main():
     print(f"\n🔎 Scaneando {args.host}")
     print(f"📌 Portas: {len(ports)} | Threads: {args.threads} | Timeout: {args.timeout}s\n")
 
-    results = scan_ports(
+    config = ScanConfig(
         host=args.host,
         ports=ports,
         timeout=args.timeout,
-        threads=args.threads,
-        
+        threads=args.threads,   
     )
+    results = run_scan(config)
 
     if VERBOSE_LEVEL == 0:
         for r in results:
