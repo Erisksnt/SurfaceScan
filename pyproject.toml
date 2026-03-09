@@ -22,3 +22,7 @@ surfacescan = "surfacescan.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["scanner", "scanner.*", "surfacescan", "surfacescan.*"]
+
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
